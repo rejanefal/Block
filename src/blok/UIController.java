@@ -21,14 +21,9 @@ public class UIController implements IUIController {
 
     @Override
     public boolean initialize() {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                ModalSelectCenario selectCenario = new ModalSelectCenario(core.getPluginController());
-                selectCenario.setVisible(true);
-                
-            }
-        });
+       
+        MainWindow mainWindow = new MainWindow((Simulator) core.getGameController().getSimulator(), core.getPluginController());
+       
         return true;
     }
     

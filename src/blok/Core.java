@@ -9,6 +9,7 @@ import interfaces.ICore;
 import interfaces.IGameController;
 import interfaces.IPluginController;
 import interfaces.IUIController;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,15 +17,19 @@ import interfaces.IUIController;
  */
 public class Core implements ICore {
 
+    private Core(){
+        
+    }
+    
     @Override
     public boolean initialize() {
+        gameController = new GameController(this);
         uiController = new UIController(this);
-        gameController = new GameController();
         pluginController = new PluginController();
   
-        return uiController.initialize() &&
-               gameController.initialize() &&
-               pluginController.initialize();
+        return  pluginController.initialize() &&
+                gameController.initialize() && 
+                uiController.initialize();
     }
 
     @Override
@@ -42,8 +47,14 @@ public class Core implements ICore {
         return pluginController;
     }
     
+     public static Core getInstance(){
+        if(core==null)
+            core= new Core();
+        return core;
+    }
+    
     private IUIController uiController;
     private IGameController gameController;
     private IPluginController pluginController;
-    
+    private static Core core = null;
 }

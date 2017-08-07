@@ -11,13 +11,28 @@ import interfaces.IGameController;
  *
  * @author aluno
  */
-public class GameController implements IGameController {
+public class GameController implements IGameController{
+
+    public GameController(Core core) {
+        this.core = core;
+    }
+    
 
     @Override
     public boolean initialize() {
-        //simulator = new Simulator(mainPanel)
+       simulator = new Simulator();
+        //core.getUIController()
         return true;
     }
     
-    Simulator simulator;
+    private Core core;
+    private Simulator simulator;
+
+    @Override
+    public Object getSimulator() {
+        return simulator;
+    }
+    
+    
+
 }

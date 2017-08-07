@@ -5,6 +5,7 @@
 package blok;
 
 import interfaces.ICenario;
+import interfaces.IJogador;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -32,14 +33,14 @@ public class MainPanel extends javax.swing.JPanel implements MouseListener, KeyL
     /**
      * Creates new form MainPanel
      */
-    private ICenario cenario;
-    public MainPanel(ICenario cenario) {
+    public MainPanel(ICenario cenario, IJogador jogador) {
         this.cenario = cenario;
+        this.jogador = jogador;
         initComponents();
         setFocusable(true);
         addMouseListener(this);
         addKeyListener(this);
-        m_playerImage = "images/player" + Math.abs((new Random()).nextInt()%9) + ".png";
+        //m_playerImage = "images/player" + Math.abs((new Random()).nextInt()%9) + ".png";
         playWav("sounds/background.wav", -1);
     }
 
@@ -177,12 +178,8 @@ public class MainPanel extends javax.swing.JPanel implements MouseListener, KeyL
             }
             else {
                 // Player
-                try {
-                    TexturePaint texturePaint = new TexturePaint(ImageIO.read(new File(m_playerImage)), rect);
-                    g2d.setPaint(texturePaint);
-                } catch (IOException ex) {
-                    Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                TexturePaint texturePaint = new TexturePaint(jogador.createJogador().carregar(), rect);
+                g2d.setPaint(texturePaint);
             }
             g2d.fill(rect);
         }
@@ -232,7 +229,7 @@ public class MainPanel extends javax.swing.JPanel implements MouseListener, KeyL
         m_state = state;
         switch(m_state) {
             case INITIAL:
-                m_playerImage = "images/player" + Math.abs((new Random()).nextInt()%9) + ".png";
+                //m_playerImage = "images/player" + Math.abs((new Random()).nextInt()%9) + ".png";
                 m_simulator.init();
                 m_simulator.stop();
                 break;
@@ -256,7 +253,9 @@ public class MainPanel extends javax.swing.JPanel implements MouseListener, KeyL
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
-
+    
+    private ICenario cenario;
+    private IJogador jogador;
     private Simulator m_simulator;
     private HashMap<Body, Rectangle> m_bodyRect = new HashMap<Body, Rectangle>();
     private Rectangle m_player;

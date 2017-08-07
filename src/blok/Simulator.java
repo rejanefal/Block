@@ -22,8 +22,15 @@ import org.jbox2d.dynamics.contacts.Contact;
  */
 public class Simulator implements Runnable, ContactListener {
 
+    public Simulator() {
+    }
+    
     public Simulator(MainPanel mainPanel) {
         m_mainPanel = mainPanel;
+    }
+
+    public void setMainPanel(MainPanel m_mainPanel) {
+        this.m_mainPanel = m_mainPanel;
     }
     
     public void start() {

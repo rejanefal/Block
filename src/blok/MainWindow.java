@@ -5,6 +5,8 @@
 package blok;
 
 import interfaces.ICenario;
+import interfaces.IJogador;
+import interfaces.IPluginController;
 import java.awt.Dimension;
 
 /**
@@ -16,11 +18,21 @@ public class MainWindow extends javax.swing.JFrame {
     /**
      * Creates new form MainWindow
      */
-    public MainWindow(ICenario cenario) {
+    public MainWindow(Simulator simulator, IPluginController controller) {
         initComponents();
-        Dimension size = new Dimension(1000, 600);
 
-        MainPanel mainPanel = new MainPanel(cenario);
+        this.simulator = simulator;
+        ModalCombos modal = new ModalCombos(this, controller);
+        this.setVisible(false);
+        modal.setVisible(true);
+        
+        
+    }
+    
+    public void start(ICenario cenario, IJogador jogador) {
+        
+        Dimension size = new Dimension(1000, 600);
+        MainPanel mainPanel = new MainPanel(cenario, jogador);
         mainPanel.setPreferredSize(size);
         mainPanel.setMinimumSize(size);
         mainPanel.setMaximumSize(size);
@@ -30,7 +42,8 @@ public class MainWindow extends javax.swing.JFrame {
         setResizable(false);
         pack();
         
-        Simulator simulator = new Simulator(mainPanel);
+        //Simulator simulator = new Simulator(mainPanel);
+        simulator.setMainPanel(mainPanel);
         mainPanel.setSimulator(simulator);
         simulator.init();
         //simulator.start();
@@ -63,9 +76,11 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private Simulator simulator;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
+
 }

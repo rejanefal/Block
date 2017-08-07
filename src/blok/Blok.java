@@ -15,9 +15,8 @@ public class Blok {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Core core = new Core();
-        core.initialize();
-        //core.getUIController().createMenuItem("teste", "Open");
+        Core.getInstance().initialize();
+       
     }
     
 }
